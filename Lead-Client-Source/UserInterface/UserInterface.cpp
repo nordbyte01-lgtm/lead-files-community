@@ -40,6 +40,13 @@ volatile int _AVOID_FLOATING_POINT_LIBRARY_BUG = _fltused;
 #pragma comment( lib, "ddraw.lib" )
 #pragma comment( lib, "dmoguids.lib" )
 //#pragma comment( lib, "wsock32.lib" )
+
+#ifdef _DEBUG
+#pragma comment( lib, "cryptlib-Debug.lib" )
+#else
+#pragma comment( lib, "cryptlib-Release.lib" )
+#endif
+
 #include <stdlib.h>
 
 extern bool SetDefaultCodePage(DWORD codePage);

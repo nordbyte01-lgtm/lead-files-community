@@ -3,3 +3,6 @@
 /**/Debug/
 /**/Release/
 /**/Win32/
+
+# Ignore too big files
+lib/cryptlib-Debug.lib

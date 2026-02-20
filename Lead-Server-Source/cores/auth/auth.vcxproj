@@ -41,7 +41,8 @@
     <TargetName>auth_d</TargetName>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg">
-    <VcpkgEnableManifest>true</VcpkgEnableManifest>
+    <VcpkgEnableManifest>false</VcpkgEnableManifest>
+    <VcpkgEnabled>false</VcpkgEnabled>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <VcpkgUseStatic>true</VcpkgUseStatic>
@@ -164,7 +165,6 @@
     <ClCompile Include="..\..\game\src\MarkManager.cpp" />
     <ClCompile Include="..\..\game\src\marriage.cpp" />
     <ClCompile Include="..\..\game\src\messenger_manager.cpp" />
-
     <ClCompile Include="..\..\game\src\mining.cpp" />
     <ClCompile Include="..\..\game\src\mob_manager.cpp" />
     <ClCompile Include="..\..\game\src\motion.cpp" />
@@ -293,7 +293,6 @@
     <ClInclude Include="..\..\game\src\MarkManager.h" />
     <ClInclude Include="..\..\game\src\marriage.h" />
     <ClInclude Include="..\..\game\src\messenger_manager.h" />
-
     <ClInclude Include="..\..\game\src\mining.h" />
     <ClInclude Include="..\..\game\src\mob_manager.h" />
     <ClInclude Include="..\..\game\src\motion.h" />

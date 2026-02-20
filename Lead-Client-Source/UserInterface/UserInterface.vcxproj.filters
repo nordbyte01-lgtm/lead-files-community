@@ -89,6 +89,7 @@
     <ClCompile Include="ServerStateCheckerModule.cpp" />
     <ClCompile Include="StdAfx.cpp" />
     <ClCompile Include="UserInterface.cpp" />
+    <ClCompile Include="PythonSwitchbot.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractApplication.h" />
@@ -137,6 +138,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="ServerStateChecker.h" />
     <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="PythonSwitchbot.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="UserInterface.rc" />
