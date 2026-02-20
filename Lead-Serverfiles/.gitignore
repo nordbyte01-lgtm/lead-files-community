@@ -1,26 +1,23 @@
 # Generated build files
-/db/db_d.*
-/auth/game_d.*
-/auth/data*
-/auth/locale*
-/auth/conf*
-/channel1/game1/public*
-/channel1/game1/game_d.*
-/channel1/game1/locale*
-/channel1/game1/conf*
-/channel1/game1/data*
-/channel1/game2/locale*
-/channel1/game2/conf*
-/channel1/game2/data*
-/channel1/game2/locale*
-/channel1/game2/conf*
-/channel99/game_d.*
-/channel99/data*
-/channel99/locale*
-/channel99/conf*
+*.idb
+*.pdb
+
+# Ignore executables and links needed for windows development
+/**/db_d.*
+/**/game_d.*
 /db/data*
 /db/locale*
 /db/conf*
+/auth/public*
+/auth/data*
+/auth/locale*
+/auth/conf*
+/channel*/**/public*
+/channel*/**/data*
+/channel*/**/locale*
+/channel*/**/conf*
+!/**/CONFIG
+!/**/conf.txt
 
 # Generated log files
 /**/log/
@@ -34,5 +31,6 @@
 /**/syslog
 /**/usage.txt
 
+# Quest objects
 /share/locale/english/quest/__pycache__
 /share/locale/english/quest/qc.*
