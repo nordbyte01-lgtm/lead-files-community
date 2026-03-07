@@ -2569,6 +2569,9 @@ int CInputMain::Guild(LPCHARACTER ch, const char * data, size_t uiBytes)
 					return SubPacketLen;
 				}
 
+				if (!newmember->IsPC())
+					return SubPacketLen;
+
 				if (!ch->IsPC())
 					return SubPacketLen;
 
