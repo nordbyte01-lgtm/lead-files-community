@@ -81,8 +81,10 @@ DWORD CGuildManager::CreateGuild(TGuildCreateParameter& gcp)
 		return 0;
 	}
 
+	static char __escaped_guild_name[GUILD_NAME_MAX_LEN * 2 + 1]{};
+	DBManager::instance().EscapeString(__escaped_guild_name, sizeof(__escaped_guild_name), gcp.name, sizeof(gcp.name));
 	std::unique_ptr<SQLMsg> pmsg(DBManager::instance().DirectQuery("SELECT COUNT(*) FROM guild%s WHERE name = '%s'",
-				get_table_postfix(), gcp.name));
+				get_table_postfix(), __escaped_guild_name));
 
 	if (pmsg->Get()->uiNumRows > 0)
 	{
