@@ -1722,16 +1722,18 @@ namespace quest
 		}
 	}
 
-	void CQuestManager::CancelServerTimers(DWORD arg)
+	void CQuestManager::CancelServerTimers(uint32_t arg)
 	{
-		itertype(m_mapServerTimer) it = m_mapServerTimer.begin();
-		for ( ; it != m_mapServerTimer.end(); ++it) {
-			if (it->first.second == arg) {
-				LPEVENT event = it->second;
+		auto erase_check = [&](auto&& it) {
+			if (it.first.second == arg) {
+				auto event = it.second;
 				event_cancel(&event);
-				m_mapServerTimer.erase(it);
 			}
-		}
+
+			return it.first.second == arg;
+		};
+
+		std::erase_if(m_mapServerTimer, erase_check);
 	}
 
 	void CQuestManager::SetServerTimerArg(DWORD dwArg)
