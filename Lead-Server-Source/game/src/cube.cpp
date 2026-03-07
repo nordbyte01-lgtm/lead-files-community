@@ -904,6 +904,10 @@ void Cube_request_result_list(LPCHARACTER ch)
 		return;
 
 	DWORD npcVNUM = npc->GetRaceNum();
+
+	if (!FN_check_valid_npc(npcVNUM))
+		return;
+
 	size_t resultCount = 0;
 
 	std::string& resultText = cube_result_info_map_by_npc[npcVNUM];
@@ -924,6 +928,9 @@ void Cube_request_result_list(LPCHARACTER ch)
 		}
 
 		resultCount = resultList.size();
+
+		if (resultCount == 0)
+			return;
 
 		resultText.erase(resultText.size() - 1);
 
@@ -954,6 +961,9 @@ void Cube_request_material_info(LPCHARACTER ch, int requestStartIndex, int reque
 		return;
 
 	DWORD npcVNUM = npc->GetRaceNum();
+	if (!FN_check_valid_npc(npcVNUM))
+		return;
+
 	std::string materialInfoText = "";
 
 	int index = 0;
@@ -978,7 +988,7 @@ void Cube_request_material_info(LPCHARACTER ch, int requestStartIndex, int reque
 			break;
 	}
 
-	if (false == bCatchInfo)
+	if (!bCatchInfo || materialInfoText.empty())
 	{
 		sys_err("[CubeInfo] Can't find matched material info (NPC: %d, index: %d, request count: %d)", npcVNUM, requestStartIndex, requestCount);
 		return;
