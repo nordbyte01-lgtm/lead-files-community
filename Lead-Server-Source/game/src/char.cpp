@@ -5057,6 +5057,12 @@ bool CHARACTER::WarpSet(int32_t x, int32_t y, int32_t lPrivateMapIndex)
 	if (!IsPC())
 		return false;
 
+	if (!CanWarp())
+	{
+		ChatPacket(CHAT_TYPE_INFO, "Please close all dialogs and wait 10 seconds before trying again.");
+		return false;
+	}
+
 	int32_t lAddr;
 	int32_t lMapIndex;
 	WORD wPort;
