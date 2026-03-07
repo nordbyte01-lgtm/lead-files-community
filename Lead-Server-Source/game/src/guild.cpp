@@ -16,6 +16,7 @@
 #include "locale_service.h"
 #include "log.h"
 #include "questmanager.h"
+#include <common/PulseManager.h>
 
 	SGuildMember::SGuildMember(LPCHARACTER ch, BYTE grade, DWORD offer_exp)
 : pid(ch->GetPlayerID()), grade(grade), is_general(0), job(ch->GetJob()), level(ch->GetLevel()), offer_exp(offer_exp), name(ch->GetName())
@@ -1009,6 +1010,11 @@ void CGuild::AddComment(LPCHARACTER ch, const std::string& str)
 {
 	if (str.length() > GUILD_COMMENT_MAX_LEN)
 		return;
+
+	if (!PulseManager::Instance().IncreaseClock(ch->GetPlayerID(), ePulse::GuildComment, std::chrono::milliseconds(1500))) {
+		ch->ChatPacket(CHAT_TYPE_INFO, "You can post a new comment in: %0.2f seconds!", PULSEMANAGER_CLOCK_TO_SEC2(ch->GetPlayerID(), ePulse::GuildComment));
+		return;
+	}
 
 	char text[GUILD_COMMENT_MAX_LEN * 2 + 1];
 	DBManager::instance().EscapeString(text, sizeof(text), str.c_str(), str.length());
