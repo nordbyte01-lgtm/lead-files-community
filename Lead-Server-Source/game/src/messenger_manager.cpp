@@ -12,6 +12,9 @@
 #include "char_manager.h"
 #include "questmanager.h"
 
+static char __escaped_account[CHARACTER_NAME_MAX_LEN * 2 + 1];
+static char __escaped_companion[CHARACTER_NAME_MAX_LEN * 2 + 1];
+
 MessengerManager::MessengerManager()
 {
 }
@@ -41,6 +44,10 @@ void MessengerManager::P2PLogout(MessengerManager::keyA account)
 void MessengerManager::Login(MessengerManager::keyA account)
 {
 	if (m_set_loginAccount.find(account) != m_set_loginAccount.end())
+		return;
+
+	DBManager::instance().EscapeString(__escaped_account, sizeof(__escaped_account), account.c_str(), account.size());
+	if (account.compare(__escaped_account))
 		return;
 
 	DBManager::instance().FuncQuery(std::bind(&MessengerManager::LoadList, this, std::placeholders::_1),
@@ -190,6 +197,10 @@ void MessengerManager::AddToList(MessengerManager::keyA account, MessengerManage
 	if (m_Relation[account].find(companion) != m_Relation[account].end())
 		return;
 
+	DBManager::instance().EscapeString(__escaped_account, sizeof(__escaped_account), account.c_str(), account.size());
+	if (account.compare(__escaped_account))
+		return;
+
 	sys_log(0, "Messenger Add %s %s", account.c_str(), companion.c_str());
 	DBManager::instance().Query("INSERT INTO messenger_list%s VALUES ('%s', '%s')", 
 			get_table_postfix(), account.c_str(), companion.c_str());
@@ -221,6 +232,11 @@ void MessengerManager::RemoveFromList(MessengerManager::keyA account, MessengerM
 	if (companion.size() == 0)
 		return;
 
+	DBManager::instance().EscapeString(__escaped_account, sizeof(__escaped_account), account.c_str(), account.size());
+	DBManager::instance().EscapeString(__escaped_companion, sizeof(__escaped_companion), companion.c_str(), companion.size());
+	if (account.compare(__escaped_account) || companion.compare(__escaped_companion))
+		return;
+
 	sys_log(1, "Messenger Remove %s %s", account.c_str(), companion.c_str());
 	DBManager::instance().Query("DELETE FROM messenger_list%s WHERE account='%s' AND companion = '%s'",
 			get_table_postfix(), account.c_str(), companion.c_str());
@@ -238,6 +254,10 @@ void MessengerManager::RemoveFromList(MessengerManager::keyA account, MessengerM
 void MessengerManager::RemoveAllList(keyA account)
 {
 	std::set<keyT>	company(m_Relation[account]);
+
+	DBManager::instance().EscapeString(__escaped_account, sizeof(__escaped_account), account.c_str(), account.size());
+	if (account.compare(__escaped_account))
+		return;
 
 	/* SQL Data delete */
 	DBManager::instance().Query("DELETE FROM messenger_list%s WHERE account='%s' OR companion='%s'",
