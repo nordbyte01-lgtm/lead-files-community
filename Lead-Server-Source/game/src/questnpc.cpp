@@ -951,6 +951,14 @@ namespace quest
 			return false;
 		}
 
+		// Some quests register `when enter`/`when leave` blocks with no code.
+		// Those have size == 0; executing them would index into an empty buffer.
+		if (itState->second.GetSize() == 0)
+		{
+			sys_log(0, "ExecuteEventScript ei %d qi %u is %d - EMPTY STATE SCRIPT (skipping)", EventIndex, dwQuestIndex, iState);
+			return false;
+		}
+
 		sys_log(0, "ExecuteEventScript ei %d qi %u is %d", EventIndex, dwQuestIndex, iState);
 		CQuestManager::instance().SetCurrentEventIndex(EventIndex);
 		return CQuestManager::ExecuteQuestScript(pc, dwQuestIndex, iState, itState->second.GetCode(), itState->second.GetSize());
