@@ -1533,8 +1533,13 @@ static bool FN_hair_affect_string(LPCHARACTER ch, char *buf, size_t bufsiz)
 	if (expire < get_global_time())
 		return false;
 
+	const char* cszPointString = FN_point_string(aff->bApplyOn);
+
+	if (cszPointString == nullptr || strlen(cszPointString) == 0)
+		return false;
+
 	// set apply string
-	offset = snprintf(buf, bufsiz, FN_point_string(aff->bApplyOn), aff->lApplyValue);
+	offset = snprintf(buf, bufsiz, cszPointString, aff->lApplyValue);
 
 	if (offset < 0 || offset >= (int) bufsiz)
 		offset = bufsiz - 1;
@@ -1573,7 +1578,12 @@ ACMD(do_costume)
 			const TPlayerItemAttribute& attr = pHair->GetAttribute(i);
 			if (0 < attr.bType)
 			{
-				snprintf(buf, bufferSize, FN_point_string(attr.bType), attr.sValue);
+				const char* cszPointString = FN_point_string(attr.bType);
+
+				if (cszPointString == nullptr || strlen(cszPointString) == 0)
+					continue;
+
+				snprintf(buf, bufferSize, cszPointString, attr.sValue);
 				ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("%s"), buf);
 			}
 		}
