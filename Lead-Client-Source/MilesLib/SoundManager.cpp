@@ -63,6 +63,7 @@ BOOL CSoundManager::Create()
 
 void CSoundManager::Destroy()
 {
+	m_PlaySoundHistoryMap.clear();
 	ms_SoundManagerStream.Destroy();
 	ms_SoundManager3D.Destroy();		
 	ms_SoundManager2D.Destroy();	
@@ -446,6 +447,7 @@ void CSoundManager::StopAllSound3D()
 	{
 		StopSound3D(i);
 	}
+	m_PlaySoundHistoryMap.clear();
 }
 
 void CSoundManager::PlayMusic(const char * c_szFileName)
