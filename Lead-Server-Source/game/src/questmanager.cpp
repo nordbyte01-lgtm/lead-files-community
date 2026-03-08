@@ -1722,7 +1722,7 @@ namespace quest
 		}
 	}
 
-	void CQuestManager::CancelServerTimers(uint32_t arg)
+	void CQuestManager::CancelServerTimers(DWORD arg)
 	{
 		auto erase_check = [&](auto&& it) {
 			if (it.first.second == arg) {
