@@ -1961,8 +1961,11 @@ PyObject * wndImageLoadImage(PyObject * poSelf, PyObject * poArgs)
 	if (!PyTuple_GetString(poArgs, 1, &szFileName))
 		return Py_BuildException();
 
-	if (!((UI::CImageBox*)pWindow)->LoadImage(szFileName))
-		return Py_BuildException("Failed to load image (filename: %s)", szFileName);
+	if (!dynamic_cast<UI::CImageBox*>(pWindow)->LoadImage(szFileName))
+	{
+		TraceError("Failed to load image (filename: %s)", szFileName);
+		return Py_BuildNone();
+	}
 
 	return Py_BuildNone();
 }
