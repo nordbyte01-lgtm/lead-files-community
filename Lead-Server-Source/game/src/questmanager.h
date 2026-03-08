@@ -51,6 +51,7 @@ namespace quest
 
 			PC *		GetPC(unsigned int pc);
 			PC *		GetPCForce(unsigned int pc);	// today PC without changing PC get a pointer .
+			void		StopAllRunningQuests();
 
 			unsigned int	GetCurrentNPCRace();
 			const string & 	GetCurrentQuestName();

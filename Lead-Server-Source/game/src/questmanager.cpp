@@ -899,6 +899,30 @@ namespace quest
 		m_mapPC.erase(ch->GetPlayerID());
 	}
 
+	void CQuestManager::StopAllRunningQuests()
+	{
+		for (PCMap::iterator it = m_mapPC.begin(); it != m_mapPC.end(); it++)
+		{
+			it->second.CancelRunning();
+			LPCHARACTER pkChr = CHARACTER_MANAGER::instance().FindByPID(it->first);
+			if (!pkChr || !(pkChr->GetDesc()))
+				continue;
+			struct ::packet_script packet_script;
+
+			packet_script.header = HEADER_GC_SCRIPT;
+			packet_script.skin = QUEST_SKIN_NOWINDOW;
+			string data = "[DESTROY_ALL]";
+			packet_script.src_size = data.size();
+			packet_script.size = packet_script.src_size + sizeof(struct packet_script);
+
+			TEMP_BUFFER buf;
+			buf.write(&packet_script, sizeof(struct packet_script));
+			buf.write(&data[0], data.size());
+
+			pkChr->GetDesc()->Packet(buf.read_peek(), buf.size());
+		}
+	}
+
 	PC * CQuestManager::GetPCForce(unsigned int pc)
 	{
 		PCMap::iterator it;
@@ -1521,6 +1545,8 @@ namespace quest
 
 	void CQuestManager::Reload()
 	{
+		StopAllRunningQuests();
+
 		lua_close(L);
 		m_mapNPC.clear();
 		m_mapNPCNameID.clear();

@@ -531,7 +531,8 @@ class CPythonNetworkStream : public CNetworkStream, public CSingleton<CPythonNet
 		// Calls sent to Python
 		void OnConnectFailure();
 		void OnScriptEventStart(int iSkin, int iIndex);
-		
+        void HideQuestWindows();
+
 		void OnRemoteDisconnect();
 		void OnDisconnect();
 

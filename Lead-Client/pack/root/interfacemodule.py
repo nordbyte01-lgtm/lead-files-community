@@ -673,7 +673,15 @@ class Interface(object):
 		self.wndQuestWindowNewKey = self.wndQuestWindowNewKey + 1
 
 		# END_OF_UNKNOWN_UPDATE
-		
+
+	def HideAllQuestWindow(self):
+		tempList = []
+		for i,v in self.wndQuestWindow.iteritems():
+			tempList.append(v)
+
+		for i in tempList:
+			i.OnCancel()
+
 	def RemoveQuestDialog(self, key):
 		del self.wndQuestWindow[key]
 

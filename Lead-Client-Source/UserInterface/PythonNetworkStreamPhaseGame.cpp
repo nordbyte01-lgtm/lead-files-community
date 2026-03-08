@@ -2052,7 +2052,13 @@ bool CPythonNetworkStream::RecvScriptPacket()
 		return false;
 
 	str[str.size()-1] = '\0';
-	
+
+	if (str.compare(0, 13, "[DESTROY_ALL]") == 0)
+	{
+		CPythonNetworkStream::Instance().HideQuestWindows();
+		return true;
+	}
+
 	int iIndex = CPythonEventManager::Instance().RegisterEventSetFromString(str);
 
 	if (-1 != iIndex)
