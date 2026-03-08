@@ -4139,8 +4139,9 @@ void CHARACTER::SetParty(LPPARTY pkParty)
 
 	sys_log(1, "PARTY set to %p", get_pointer(pkParty));
 
-	//if (m_pkDungeon && IsPC())
-	//SetDungeon(NULL);
+	if (m_pkDungeon && IsPC() && !pkParty)
+		SetDungeon(nullptr);
+
 	m_pkParty = pkParty;
 
 	if (IsPC())
