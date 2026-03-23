@@ -873,7 +873,7 @@ class CHARACTER : public CEntity, public CFSM, public CHorseRider
 		bool			IsRefineThroughGuild() const;
 		CGuild *		GetRefineGuild() const;
 		int				ComputeRefineFee(int iCost, int iMultiply = 5) const;
-		void			PayRefineFee(int iTotalMoney);
+		void			PayRefineFee(GoldType iTotalMoney);
 		void			SetRefineNPC(LPCHARACTER ch);
 		// END_OF_ADD_REFINE_BUILDING
 

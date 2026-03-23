@@ -1785,61 +1785,6 @@ void CGuild::AdvanceLevel(int iLevel)
 	m_data.level = MIN(GUILD_MAX_LEVEL, iLevel);
 }
 
-void CGuild::RequestDepositMoney(LPCHARACTER ch, GoldType iGold)
-{
-	if (false==ch->CanDeposit())
-	{
-		ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("[Guild] Please try again later."));
-		return;
-	}
-
-	if (ch->GetGold() < iGold)
-		return;
-
-
-	ch->PointChange(POINT_GOLD, -iGold);
-
-	TPacketGDGuildMoney p;
-	p.dwGuild = GetID();
-	p.iGold = iGold;
-	db_clientdesc->DBPacket(HEADER_GD_GUILD_DEPOSIT_MONEY, 0, &p, sizeof(p));
-
-	char buf[64+1];
-	snprintf(buf, sizeof(buf), "%u %s", GetID(), GetName());
-	LogManager::instance().CharLog(ch, iGold, "GUILD_DEPOSIT", buf);
-
-	ch->UpdateDepositPulse();
-	sys_log(0, "GUILD: DEPOSIT %s:%u player %s[%u] gold %lld", GetName(), GetID(), ch->GetName(), ch->GetPlayerID(), static_cast<long long>(iGold));
-}
-
-void CGuild::RequestWithdrawMoney(LPCHARACTER ch, GoldType iGold)
-{
-	if (false==ch->CanDeposit())
-	{
-		ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("[Guild] Please try again later."));
-		return;
-	}
-
-	if (ch->GetPlayerID() != GetMasterPID())
-	{
-		ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("[Guild] Only the guild leader can withdraw Yang."));
-		return;
-	}
-
-	if (m_data.gold < iGold)
-	{
-		ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("[Guild] You do not have enough Yang."));
-		return;
-	}
-
-	TPacketGDGuildMoney p;
-	p.dwGuild = GetID();
-	p.iGold = iGold;
-	db_clientdesc->DBPacket(HEADER_GD_GUILD_WITHDRAW_MONEY, 0, &p, sizeof(p));
-
-	ch->UpdateDepositPulse();
-}
-
 void CGuild::RecvMoneyChange(GoldType iGold)
 {
 	m_data.gold = iGold;
@@ -1856,23 +1801,6 @@ void CGuild::RecvMoneyChange(GoldType iGold)
 		d->BufferedPacket(&p, sizeof(p));
 		d->Packet(&iGold, sizeof(GoldType));
 	}
-}
-
-void CGuild::RecvWithdrawMoneyGive(GoldType iChangeGold)
-{
-	LPCHARACTER ch = GetMasterCharacter();
-
-	if (ch)
-	{
-		ch->PointChange(POINT_GOLD, iChangeGold);
-		sys_log(0, "GUILD: WITHDRAW %s:%u player %s[%u] gold %lld", GetName(), GetID(), ch->GetName(), ch->GetPlayerID(), static_cast<long long>(iChangeGold));
-	}
-
-	TPacketGDGuildMoneyWithdrawGiveReply p;
-	p.dwGuild = GetID();
-	p.iChangeGold = iChangeGold;
-	p.bGiveSuccess = ch ? 1 : 0;
-	db_clientdesc->DBPacket(HEADER_GD_GUILD_WITHDRAW_MONEY_GIVE_REPLY, 0, &p, sizeof(p));
 }
 
 bool CGuild::HasLand()

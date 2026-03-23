@@ -225,8 +225,6 @@ class CPythonNetworkStream : public CNetworkStream, public CSingleton<CPythonNet
 		bool SendGuildInvitePacket(DWORD dwVID);
 		bool SendGuildInviteAnswerPacket(DWORD dwGuildID, BYTE byAnswer);
 		bool SendGuildChargeGSPPacket(DWORD dwMoney);
-		bool SendGuildDepositMoneyPacket(GoldType dwMoney);
-		bool SendGuildWithdrawMoneyPacket(GoldType dwMoney);
 
 		// Mall
 		bool RecvMallOpenPacket();

@@ -981,12 +981,6 @@ class GuildWindow(ui.ScriptWindow):
 				page.guildMoneySlot = page.GetChild("GuildMoneyValue")
 			except KeyError:
 				page.guildMoneySlot = None
- 
-			try:	
-				page.GetChild("DepositButton").SetEvent(ui.__mem_func__(self.__OnClickDepositButton))
-				page.GetChild("WithdrawButton").SetEvent(ui.__mem_func__(self.__OnClickWithdrawButton))
-			except KeyError:
-				pass
 
 			page.uploadMarkButton.SetEvent(ui.__mem_func__(self.__OnClickSelectGuildMarkButton))
 			page.uploadSymbolButton.SetEvent(ui.__mem_func__(self.__OnClickSelectGuildSymbolButton))
@@ -1755,24 +1749,6 @@ class GuildWindow(ui.ScriptWindow):
 
 		self.offerDialog.Open(curEXP, 100)
 
-	def __OnClickDepositButton(self):
-		moneyDialog = uiPickMoney.PickMoneyDialog()
-		moneyDialog.LoadDialog()
-		moneyDialog.SetMax(6)
-		moneyDialog.SetTitleName(localeInfo.GUILD_DEPOSIT)
-		moneyDialog.SetAcceptEvent(ui.__mem_func__(self.OnDeposit))
-		moneyDialog.Open(player.GetMoney())
-		self.moneyDialog = moneyDialog
-
-	def __OnClickWithdrawButton(self):
-		moneyDialog = uiPickMoney.PickMoneyDialog()
-		moneyDialog.LoadDialog()
-		moneyDialog.SetMax(6)
-		moneyDialog.SetTitleName(localeInfo.GUILD_WITHDRAW)
-		moneyDialog.SetAcceptEvent(ui.__mem_func__(self.OnWithdraw))
-		moneyDialog.Open(guild.GetGuildMoney())
-		self.moneyDialog = moneyDialog
-
 	def __OnBlock(self):
 		popup = uiCommon.PopupDialog()
 		popup.SetText(localeInfo.NOT_YET_SUPPORT)
@@ -1782,12 +1758,6 @@ class GuildWindow(ui.ScriptWindow):
 
 	def __OnClosePopupDialog(self):
 		self.popup = None
-
-	def OnDeposit(self, money):
-		net.SendGuildDepositMoneyPacket(money)
-
-	def OnWithdraw(self, money):
-		net.SendGuildWithdrawMoneyPacket(money)
 
 	def OnOffer(self, exp):
 		net.SendGuildOfferPacket(exp)

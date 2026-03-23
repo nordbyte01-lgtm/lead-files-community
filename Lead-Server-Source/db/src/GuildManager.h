@@ -193,8 +193,6 @@
 
 		GoldType	GetGuildGold(DWORD dwGuild);
 		void	DepositMoney(DWORD dwGuild, GoldType lGold);
-		void	WithdrawMoney(CPeer* peer, DWORD dwGuild, GoldType lGold);
-		void	WithdrawMoneyReply(DWORD dwGuild, BYTE bGiveSuccess, GoldType lGold);
 
 		void	MoneyChange(DWORD dwGuild, GoldType dwGold);
 

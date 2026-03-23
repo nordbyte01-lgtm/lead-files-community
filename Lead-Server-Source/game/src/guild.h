@@ -224,11 +224,7 @@ class CGuild
 		void		AdvanceLevel(int iLevel);
 
 		// Guild Money
-		void		RequestDepositMoney(LPCHARACTER ch, GoldType iGold);
-		void		RequestWithdrawMoney(LPCHARACTER ch, GoldType iGold);
-
 		void		RecvMoneyChange(GoldType iGold);
-		void		RecvWithdrawMoneyGive(GoldType iChangeGold); // bGive==1 Then, try giving it to the guild leader and send a success/failure report to DB.
 
 		GoldType	GetGuildMoney() const	{ return m_data.gold; }
 

@@ -798,46 +798,6 @@ void CGuildManager::DepositMoney(DWORD dwGuild, GoldType iGold)
 	MoneyChange(dwGuild, it->second.gold);
 }
 
-void CGuildManager::WithdrawMoney(CPeer* peer, DWORD dwGuild, GoldType iGold)
-{
-	itertype(m_map_kGuild) it = m_map_kGuild.find(dwGuild);
-
-	if (it == m_map_kGuild.end())
-	{
-		sys_err("No guild by id %u", dwGuild);
-		return;
-	}
-
-	// Since I have money, I withdraw it and upload it.
-	if (it->second.gold >= iGold)
-	{
-		it->second.gold -= iGold;
-		sys_log(0, "GUILD: %u Withdraw %lld Total %lld", dwGuild, static_cast<long long>(iGold), static_cast<long long>(it->second.gold));
-
-		TPacketDGGuildMoneyWithdraw p;
-		p.dwGuild = dwGuild;
-		p.iChangeGold = iGold;
-
-		peer->EncodeHeader(HEADER_DG_GUILD_WITHDRAW_MONEY_GIVE, 0, sizeof(TPacketDGGuildMoneyWithdraw));
-		peer->Encode(&p, sizeof(TPacketDGGuildMoneyWithdraw));
-	}
-}
-
-void CGuildManager::WithdrawMoneyReply(DWORD dwGuild, BYTE bGiveSuccess, GoldType iGold)
-{
-	itertype(m_map_kGuild) it = m_map_kGuild.find(dwGuild);
-
-	if (it == m_map_kGuild.end())
-		return;
-
-	sys_log(0, "GuildManager::WithdrawMoneyReply : guild %u success %d gold %lld", dwGuild, bGiveSuccess, static_cast<long long>(iGold));
-
-	if (!bGiveSuccess)
-		it->second.gold += iGold;
-	else
-		MoneyChange(dwGuild, it->second.gold);
-}
-
 //
 // Reservation Guild War ( Spectators can bet )
 //

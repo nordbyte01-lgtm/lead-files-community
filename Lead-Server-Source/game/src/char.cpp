@@ -2849,10 +2849,10 @@ int CHARACTER::GetLimitPoint(BYTE type) const
 		return 0;
 	}
 
-	GoldType val = m_pointsInstant.points[type];
-	GoldType max_val = LLONG_MAX;
-	GoldType limit = LLONG_MAX;
-	GoldType min_limit = -LLONG_MAX;
+	int val = m_pointsInstant.points[type];
+	int max_val = INT_MAX;
+	int limit = INT_MAX;
+	int min_limit = -INT_MAX;
 
 	switch (type)
 	{
@@ -2888,7 +2888,7 @@ int CHARACTER::GetLimitPoint(BYTE type) const
 	}
 
 	if (val > max_val)
-		sys_err("POINT_ERROR: %s type %d val %lld (max: %lld)", GetName(), type, static_cast<long long>(val), static_cast<long long>(max_val));
+		sys_err("POINT_ERROR: %s type %d val %d (max: %d)", GetName(), type, val, max_val);
 
 	if (val > limit)
 		val = limit;
@@ -6472,24 +6472,9 @@ int CHARACTER::ComputeRefineFee(int iCost, int iMultiply) const
 		return iCost;
 }
 
-void CHARACTER::PayRefineFee(int iTotalMoney)
+void CHARACTER::PayRefineFee(GoldType iTotalMoney)
 {
-	int iFee = iTotalMoney / 10;
-	CGuild* pGuild = GetRefineGuild();
-
-	int iRemain = iTotalMoney;
-
-	if (pGuild)
-	{
-		// If it's your guild iTotalMoney amy 10% is excluded
-		if (pGuild != GetGuild())
-		{
-			pGuild->RequestDepositMoney(this, iFee);
-			iRemain -= iFee;
-		}
-	}
-
-	PointChange(POINT_GOLD, -iRemain);
+	PointChange(POINT_GOLD, -iTotalMoney);
 }
 // END_OF_ADD_REFINE_BUILDING
 

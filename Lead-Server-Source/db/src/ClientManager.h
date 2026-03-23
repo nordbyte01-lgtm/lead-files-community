@@ -218,9 +218,6 @@
 	void		GuildWarScore(CPeer * peer, TPacketGuildWarScore * p);
 	void		GuildChangeLadderPoint(TPacketGuildLadderPoint* p);
 	void		GuildUseSkill(TPacketGuildUseSkill* p);
-	void		GuildDepositMoney(TPacketGDGuildMoney* p);
-	void		GuildWithdrawMoney(CPeer* peer, TPacketGDGuildMoney* p);
-	void		GuildWithdrawMoneyGiveReply(TPacketGDGuildMoneyWithdrawGiveReply* p);
 	void		GuildWarBet(TPacketGDGuildWarBet * p);
 	void		GuildChangeMaster(TPacketChangeGuildMaster* p);
 

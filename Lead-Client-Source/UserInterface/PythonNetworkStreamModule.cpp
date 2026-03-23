@@ -1434,30 +1434,6 @@ PyObject* netSendGuildChargeGSPPacket(PyObject* poSelf, PyObject* poArgs)
 	return Py_BuildNone();
 }
 
-PyObject* netSendGuildDepositMoneyPacket(PyObject* poSelf, PyObject* poArgs)
-{
-	GoldType iGSP;
-	if (!PyTuple_GetLongLong(poArgs, 0, &iGSP))
-		return Py_BuildException();
-
-	CPythonNetworkStream& rns=CPythonNetworkStream::Instance();
-	rns.SendGuildDepositMoneyPacket(iGSP);
-
-	return Py_BuildNone();
-}
-
-PyObject* netSendGuildWithdrawMoneyPacket(PyObject* poSelf, PyObject* poArgs)
-{
-	GoldType iGSP;
-	if (!PyTuple_GetLongLong(poArgs, 0, &iGSP))
-		return Py_BuildException();
-
-	CPythonNetworkStream& rns=CPythonNetworkStream::Instance();
-	rns.SendGuildWithdrawMoneyPacket(iGSP);
-
-	return Py_BuildNone();
-}
-
 PyObject* netSendRequestRefineInfoPacket(PyObject* poSelf, PyObject* poArgs)
 {
 	int iSlotIndex;
@@ -1743,8 +1719,6 @@ void initnet()
 		{ "SendGuildChangeMemberGeneralPacket",		netSendGuildChangeMemberGeneralPacket,		METH_VARARGS },
 		{ "SendGuildInviteAnswerPacket",			netSendGuildInviteAnswerPacket,				METH_VARARGS },
 		{ "SendGuildChargeGSPPacket",				netSendGuildChargeGSPPacket,				METH_VARARGS },
-		{ "SendGuildDepositMoneyPacket",			netSendGuildDepositMoneyPacket,				METH_VARARGS },
-		{ "SendGuildWithdrawMoneyPacket",			netSendGuildWithdrawMoneyPacket,			METH_VARARGS },
 
 		// Refine
 		{ "SendRequestRefineInfoPacket",			netSendRequestRefineInfoPacket,				METH_VARARGS },

@@ -209,7 +209,6 @@ protected:
 	void		GuildWarScore(const char* c_pData);
 	void		GuildSkillUsableChange(const char* c_pData);
 	void		GuildMoneyChange(const char* c_pData);
-	void		GuildWithdrawMoney(const char* c_pData);
 	void		GuildWarReserveAdd(TGuildWarReserve * p);
 	void		GuildWarReserveUpdate(TGuildWarReserve * p);
 	void		GuildWarReserveDelete(DWORD dwID);
@@ -324,4 +323,3 @@ class CInputAuth : public CInputProcessor
 };
 
 #endif /* __INC_METIN_II_GAME_INPUT_PROCESSOR__ */
-

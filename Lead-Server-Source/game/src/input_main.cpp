@@ -2518,46 +2518,6 @@ int CInputMain::Guild(LPCHARACTER ch, const char * data, size_t uiBytes)
 
 	switch (SubHeader)
 	{
-		case GUILD_SUBHEADER_CG_DEPOSIT_MONEY:
-			{
-				// by mhh : Guild funds cannot be deposited for the time being. .
-				return SubPacketLen;
-
-				const GoldType gold = MIN(*reinterpret_cast<const GoldType*>(c_pData), static_cast<GoldType>(__deposit_limit()));
-
-				if (gold < 0)
-				{
-					ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("[Guild] That is not the correct amount of Yang."));
-					return SubPacketLen;
-				}
-
-				if (ch->GetGold() < gold)
-				{
-					ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("[Guild] You do not have enough Yang."));
-					return SubPacketLen;
-				}
-
-				pGuild->RequestDepositMoney(ch, gold);
-			}
-			return SubPacketLen;
-
-		case GUILD_SUBHEADER_CG_WITHDRAW_MONEY:
-			{
-				// by mhh : Guild funds cannot be withdrawn for the time being. .
-				return SubPacketLen;
-
-				const GoldType gold = MIN(*reinterpret_cast<const GoldType*>(c_pData), static_cast<GoldType>(500000));
-
-				if (gold < 0)
-				{
-					ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("[Guild] That is not the correct amount of Yang."));
-					return SubPacketLen;
-				}
-
-				pGuild->RequestWithdrawMoney(ch, gold);
-			}
-			return SubPacketLen;
-
 		case GUILD_SUBHEADER_CG_ADD_MEMBER:
 			{
 				const DWORD vid = *reinterpret_cast<const DWORD*>(c_pData);

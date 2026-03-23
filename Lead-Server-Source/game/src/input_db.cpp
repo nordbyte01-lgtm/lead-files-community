@@ -1703,17 +1703,6 @@ void CInputDB::GuildMoneyChange(const char* c_pData)
 	}
 }
 
-void CInputDB::GuildWithdrawMoney(const char* c_pData)
-{
-	TPacketDGGuildMoneyWithdraw* p = (TPacketDGGuildMoneyWithdraw*) c_pData;
-
-	CGuild* g = CGuildManager::instance().TouchGuild(p->dwGuild);
-	if (g)
-	{
-		g->RecvWithdrawMoneyGive(p->iChangeGold);
-	}
-}
-
 void CInputDB::SetEventFlag(const char* c_pData)
 {
 	TPacketSetEventFlag* p = (TPacketSetEventFlag*) c_pData;
@@ -2067,10 +2056,6 @@ int CInputDB::Analyze(LPDESC d, BYTE bHeader, const char * c_pData)
 
 	case HEADER_DG_MONEY_LOG:
 		MoneyLog(c_pData);
-		break;
-
-	case HEADER_DG_GUILD_WITHDRAW_MONEY_GIVE:
-		GuildWithdrawMoney(c_pData);
 		break;
 
 	case HEADER_DG_GUILD_MONEY_CHANGE:

@@ -1723,21 +1723,6 @@ void CClientManager::QUERY_AUTH_LOGIN(CPeer * pkPeer, DWORD dwHandle, TPacketGDA
 	}
 }
 
-void CClientManager::GuildDepositMoney(TPacketGDGuildMoney* p)
-{
-	CGuildManager::instance().DepositMoney(p->dwGuild, p->iGold);
-}
-
-void CClientManager::GuildWithdrawMoney(CPeer* peer, TPacketGDGuildMoney* p)
-{
-	CGuildManager::instance().WithdrawMoney(peer, p->dwGuild, p->iGold);
-}
-
-void CClientManager::GuildWithdrawMoneyGiveReply(TPacketGDGuildMoneyWithdrawGiveReply* p)
-{
-	CGuildManager::instance().WithdrawMoneyReply(p->dwGuild, p->bGiveSuccess, p->iChangeGold);
-}
-
 void CClientManager::GuildWarBet(TPacketGDGuildWarBet * p)
 {
 	CGuildManager::instance().Bet(p->dwWarID, p->szLogin, p->dwGold, p->dwGuild);
@@ -2218,18 +2203,6 @@ void CClientManager::ProcessPackets(CPeer * peer)
 
 			case HEADER_GD_MONEY_LOG:
 				MoneyLog((TPacketMoneyLog*)data);
-				break;
-
-			case HEADER_GD_GUILD_DEPOSIT_MONEY:
-				GuildDepositMoney((TPacketGDGuildMoney*)data);
-				break;
-
-			case HEADER_GD_GUILD_WITHDRAW_MONEY:
-				GuildWithdrawMoney(peer, (TPacketGDGuildMoney*)data);
-				break;
-
-			case HEADER_GD_GUILD_WITHDRAW_MONEY_GIVE_REPLY:
-				GuildWithdrawMoneyGiveReply((TPacketGDGuildMoneyWithdrawGiveReply*)data);
 				break;
 
 			case HEADER_GD_GUILD_WAR_BET:

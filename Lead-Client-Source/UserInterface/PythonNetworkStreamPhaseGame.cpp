@@ -3036,34 +3036,6 @@ bool CPythonNetworkStream::SendGuildChargeGSPPacket(DWORD dwMoney)
 	return SendSequence();
 }
 
-bool CPythonNetworkStream::SendGuildDepositMoneyPacket(GoldType dwMoney)
-{
-	TPacketCGGuild GuildPacket;
-	GuildPacket.header = HEADER_CG_GUILD;
-	GuildPacket.subheader = GUILD_SUBHEADER_CG_DEPOSIT_MONEY;
-	if (!Send(sizeof(GuildPacket), &GuildPacket))
-		return false;
-	if (!Send(sizeof(dwMoney), &dwMoney))
-		return false;
-
-	Tracef(" SendGuildDepositMoneyPacket %lld\n", static_cast<long long>(dwMoney));
-	return SendSequence();
-}
-
-bool CPythonNetworkStream::SendGuildWithdrawMoneyPacket(GoldType dwMoney)
-{
-	TPacketCGGuild GuildPacket;
-	GuildPacket.header = HEADER_CG_GUILD;
-	GuildPacket.subheader = GUILD_SUBHEADER_CG_WITHDRAW_MONEY;
-	if (!Send(sizeof(GuildPacket), &GuildPacket))
-		return false;
-	if (!Send(sizeof(dwMoney), &dwMoney))
-		return false;
-
-	Tracef(" SendGuildWithdrawMoneyPacket %lld\n", static_cast<long long>(dwMoney));
-	return SendSequence();
-}
-
 bool CPythonNetworkStream::RecvGuild()
 {
     TPacketGCGuild GuildPacket;
