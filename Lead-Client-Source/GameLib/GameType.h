@@ -5,6 +5,8 @@
 #include "../eterLib/TextFileLoader.h"
 #include "../eterLib/CollisionData.h"
 
+typedef long long GoldType;
+
 extern float g_fGameFPS;
 
 extern std::string g_strResourcePath;

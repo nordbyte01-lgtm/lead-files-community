@@ -1184,14 +1184,14 @@ void CInputMain::Exchange(LPCHARACTER ch, const char * data)
 		case EXCHANGE_SUBHEADER_CG_ELK_ADD:	// arg1 == amount of gold
 			if (ch->GetExchange())
 			{
-				const int64_t nTotalGold = static_cast<int64_t>(ch->GetExchange()->GetCompany()->GetOwner()->GetGold()) + static_cast<int64_t>(pinfo->arg1);
+				const GoldType nTotalGold = ch->GetExchange()->GetCompany()->GetOwner()->GetGold() + pinfo->arg1;
 
 				if (GOLD_MAX <= nTotalGold)
 				{
 					ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("The player has more than 2 Billion Yang. You cannot trade with him."));
 
-					sys_err("[OVERFLOW_GOLD] ELK_ADD (%u) id %u name %s ",
-							ch->GetExchange()->GetCompany()->GetOwner()->GetGold(),
+					sys_err("[OVERFLOW_GOLD] ELK_ADD (%lld) id %u name %s ",
+							static_cast<long long>(ch->GetExchange()->GetCompany()->GetOwner()->GetGold()),
 							ch->GetExchange()->GetCompany()->GetOwner()->GetPlayerID(),
 						   	ch->GetExchange()->GetCompany()->GetOwner()->GetName());
 
@@ -2467,8 +2467,8 @@ size_t GetSubPacketSize(const GUILD_SUBHEADER_CG& header)
 {
 	switch (header)
 	{
-		case GUILD_SUBHEADER_CG_DEPOSIT_MONEY:				return sizeof(int);
-		case GUILD_SUBHEADER_CG_WITHDRAW_MONEY:				return sizeof(int);
+		case GUILD_SUBHEADER_CG_DEPOSIT_MONEY:				return sizeof(GoldType);
+		case GUILD_SUBHEADER_CG_WITHDRAW_MONEY:				return sizeof(GoldType);
 		case GUILD_SUBHEADER_CG_ADD_MEMBER:					return sizeof(DWORD);
 		case GUILD_SUBHEADER_CG_REMOVE_MEMBER:				return sizeof(DWORD);
 		case GUILD_SUBHEADER_CG_CHANGE_GRADE_NAME:			return 10;
@@ -2523,7 +2523,7 @@ int CInputMain::Guild(LPCHARACTER ch, const char * data, size_t uiBytes)
 				// by mhh : Guild funds cannot be deposited for the time being. .
 				return SubPacketLen;
 
-				const int gold = MIN(*reinterpret_cast<const int*>(c_pData), __deposit_limit());
+				const GoldType gold = MIN(*reinterpret_cast<const GoldType*>(c_pData), static_cast<GoldType>(__deposit_limit()));
 
 				if (gold < 0)
 				{
@@ -2546,7 +2546,7 @@ int CInputMain::Guild(LPCHARACTER ch, const char * data, size_t uiBytes)
 				// by mhh : Guild funds cannot be withdrawn for the time being. .
 				return SubPacketLen;
 
-				const int gold = MIN(*reinterpret_cast<const int*>(c_pData), 500000);
+				const GoldType gold = MIN(*reinterpret_cast<const GoldType*>(c_pData), static_cast<GoldType>(500000));
 
 				if (gold < 0)
 				{

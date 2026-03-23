@@ -5,6 +5,8 @@
 
 #include "service.h"
 
+typedef long long GoldType;
+
 enum EMisc
 {
 	// TODO: private code length is 7, refactor this later on
@@ -81,10 +83,6 @@ enum EMisc
 
 	WEAR_MAX_NUM				= 32,
 
-	//LIMIT_GOLD
-	GOLD_MAX = 2000000000,
-	//END_LIMIT_GOLD
-
 	SHOP_TAB_NAME_MAX = 32,
 	SHOP_TAB_COUNT_MAX = 3,
 
@@ -95,6 +93,10 @@ enum EMisc
 
 	MAX_GROUP_ITEM_NUM = 256,
 };
+
+// LIMIT_GOLD
+constexpr GoldType GOLD_MAX = 100000000000000000LL;
+// END_LIMIT_GOLD
 
 enum SwitchbotValues
 {

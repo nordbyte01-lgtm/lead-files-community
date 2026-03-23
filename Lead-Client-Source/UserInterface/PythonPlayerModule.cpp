@@ -608,7 +608,7 @@ PyObject * playerSetStatus(PyObject* poSelf, PyObject* poArgs)
 
 PyObject * playerGetElk(PyObject* poSelf, PyObject* poArgs)
 {
-	return Py_BuildValue("i", CPythonPlayer::Instance().GetStatus(POINT_GOLD));
+	return PyLong_FromLongLong(CPythonPlayer::Instance().GetGold());
 }
 
 PyObject * playerGetGuildID(PyObject* poSelf, PyObject* poArgs)
@@ -1082,7 +1082,7 @@ PyObject * playerGetISellItemPrice(PyObject * poSelf, PyObject * poArgs)
 	if (!CItemManager::Instance().GetItemDataPointer(CPythonPlayer::Instance().GetItemIndex(Cell), &pItemData))
 		return Py_BuildValue("i", 0);
 
-	int iPrice;
+	GoldType iPrice;
 
 	if (pItemData->IsFlag(CItemData::ITEM_FLAG_COUNT_PER_1GOLD))
 		iPrice = CPythonPlayer::Instance().GetItemCount(Cell) / pItemData->GetISellItemPrice();
@@ -1090,7 +1090,7 @@ PyObject * playerGetISellItemPrice(PyObject * poSelf, PyObject * poArgs)
 		iPrice = pItemData->GetISellItemPrice() * CPythonPlayer::Instance().GetItemCount(Cell);
 
 	iPrice /= 5;
-	return Py_BuildValue("i", iPrice);
+	return PyLong_FromLongLong(iPrice);
 }
 
 PyObject * playerGetQuickPage(PyObject* poSelf, PyObject* poArgs)

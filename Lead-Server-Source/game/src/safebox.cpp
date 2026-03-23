@@ -9,7 +9,7 @@
 #include "item.h"
 #include "item_manager.h"
 
-CSafebox::CSafebox(LPCHARACTER pkChrOwner, int iSize, DWORD dwGold) : m_pkChrOwner(pkChrOwner), m_iSize(iSize), m_lGold(dwGold)
+CSafebox::CSafebox(LPCHARACTER pkChrOwner, int iSize, GoldType dwGold) : m_pkChrOwner(pkChrOwner), m_iSize(iSize), m_lGold(dwGold)
 {
 	assert(m_pkChrOwner != NULL);
 	memset(m_pkItems, 0, sizeof(m_pkItems));
@@ -246,4 +246,3 @@ bool CSafebox::IsValidPosition(DWORD dwPos)
 
 	return true;
 }
-

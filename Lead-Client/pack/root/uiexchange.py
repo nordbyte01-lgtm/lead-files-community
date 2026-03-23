@@ -53,7 +53,7 @@ class ExchangeDialog(ui.ScriptWindow):
 		dlgPickMoney.LoadDialog()
 		dlgPickMoney.SetAcceptEvent(ui.__mem_func__(self.OnPickMoney))
 		dlgPickMoney.SetTitleName(localeInfo.EXCHANGE_MONEY)
-		dlgPickMoney.SetMax(7)
+		dlgPickMoney.SetMax(20)
 		dlgPickMoney.Hide()
 		self.dlgPickMoney = dlgPickMoney
 

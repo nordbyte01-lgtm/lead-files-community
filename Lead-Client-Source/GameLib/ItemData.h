@@ -465,8 +465,8 @@ class CItemData
 		BOOL IsWearableFlag(DWORD dwFlag) const;
 		BOOL HasNextGrade() const;
 		DWORD GetWearFlags() const;
-		DWORD GetIBuyItemPrice() const;
-		DWORD GetISellItemPrice() const;
+		GoldType GetIBuyItemPrice() const;
+		GoldType GetISellItemPrice() const;
 		BOOL GetLimit(BYTE byIndex, TItemLimit * pItemLimit) const;
 		BOOL GetApply(BYTE byIndex, TItemApply * pItemApply) const;
 		long GetValue(BYTE byIndex) const;

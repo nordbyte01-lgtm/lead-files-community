@@ -15,7 +15,7 @@ class CShop
 		typedef struct shop_item
 		{
 			DWORD	vnum;		// item number
-			long	price;		// price
+			GoldType price;		// price
 			ItemStackType	count;		// Number of items
 
 			LPITEM	pkItem;

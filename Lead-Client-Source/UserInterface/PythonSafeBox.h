@@ -1,4 +1,6 @@
-﻿#pragma once
+#pragma once
+
+#include "Packet.h"
 
 class CPythonSafeBox : public CSingleton<CPythonSafeBox>
 {
@@ -19,8 +21,8 @@ class CPythonSafeBox : public CSingleton<CPythonSafeBox>
 		void SetItemData(DWORD dwSlotIndex, const TItemData & rItemData);
 		void DelItemData(DWORD dwSlotIndex);
 
-		void SetMoney(DWORD dwMoney);
-		DWORD GetMoney();
+		void SetMoney(GoldType dwMoney);
+		GoldType GetMoney();
 		
 		BOOL GetSlotItemID(DWORD dwSlotIndex, DWORD* pdwItemID);
 
@@ -38,5 +40,6 @@ class CPythonSafeBox : public CSingleton<CPythonSafeBox>
 	protected:
 		TItemInstanceVector m_ItemInstanceVector;
 		TItemInstanceVector m_MallItemInstanceVector;
-		DWORD m_dwMoney;
+		GoldType m_dwMoney;
 };
+

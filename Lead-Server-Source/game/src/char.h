@@ -141,14 +141,14 @@ struct DynamicCharacterPtr {
 /* data you save */
 typedef struct character_point
 {
-	long			points[POINT_MAX_NUM];
+	GoldType		points[POINT_MAX_NUM];
 
 	BYTE			job;
 	BYTE			voice;
 
 	BYTE			level;
 	DWORD			exp;
-	long			gold;
+	GoldType		gold;
 
 	int				hp;
 	int				sp;
@@ -164,7 +164,7 @@ typedef struct character_point
 /* Character data not saved */
 typedef struct character_point_instant
 {
-	long			points[POINT_MAX_NUM];
+	GoldType		points[POINT_MAX_NUM];
 
 	float			fRot;
 
@@ -469,8 +469,8 @@ class CHARACTER : public CEntity, public CFSM, public CHorseRider
 		void			SetRealPoint(BYTE idx, int val);
 		int				GetRealPoint(BYTE idx) const;
 
-		void			SetPoint(BYTE idx, int val);
-		int				GetPoint(BYTE idx) const;
+		void			SetPoint(BYTE idx, GoldType val);
+		GoldType		GetPoint(BYTE idx) const;
 		int				GetLimitPoint(BYTE idx) const;
 		int				GetPolymorphPoint(BYTE idx) const;
 
@@ -515,7 +515,7 @@ class CHARACTER : public CEntity, public CFSM, public CHorseRider
 
 		void			ComputePoints();
 		void			ComputeBattlePoints();
-		void			PointChange(BYTE type, int amount, bool bAmount = false, bool bBroadcast = false);
+		void			PointChange(BYTE type, GoldType amount, bool bAmount = false, bool bBroadcast = false);
 		void			PointsPacket();
 		void			ApplyPoint(BYTE bApplyType, int iVal);
 		void			CheckMaximumPoints();	// HP, SP Check whether the current value of etc. is higher than the maximum value, and if so, lower it. .
@@ -947,7 +947,7 @@ class CHARACTER : public CEntity, public CFSM, public CHorseRider
 		 * @param [in]	dwItemVnum item vnum
 		 * @param [in]	dwItemPrice item price
 		 */
-		void			SendMyShopPriceListCmd(DWORD dwItemVnum, DWORD dwItemPrice);
+		void			SendMyShopPriceListCmd(DWORD dwItemVnum, GoldType dwItemPrice);
 
 		bool			m_bNoOpenedShop;	///< Whether you have opened a personal store since logging in this time ( If you've never opened it true)
 
@@ -959,11 +959,11 @@ class CHARACTER : public CEntity, public CFSM, public CHorseRider
 	public:
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Money related
-		INT				GetGold() const		{ return m_points.gold;	}
-		void			SetGold(INT gold)	{ m_points.gold = gold;	}
-		bool			DropGold(INT gold);
-		INT				GetAllowedGold() const;
-		void			GiveGold(INT iAmount);	// Party distribution if there is a party , Processing of logs, etc.
+		GoldType		GetGold() const		{ return m_points.gold;	}
+		void			SetGold(GoldType gold)	{ m_points.gold = gold;	}
+		bool			DropGold(GoldType gold);
+		GoldType		GetAllowedGold() const;
+		void			GiveGold(GoldType iAmount);	// Party distribution if there is a party , Processing of logs, etc.
 		// End of Money
 
 		////////////////////////////////////////////////////////////////////////////////////////
@@ -1294,7 +1294,7 @@ class CHARACTER : public CEntity, public CFSM, public CHorseRider
 		void				SetSafeboxSize(int size);
 
 		CSafebox *			GetSafebox() const;
-		void				LoadSafebox(int iSize, DWORD dwGold, int iItemCount, TPlayerItem * pItems);
+		void				LoadSafebox(int iSize, GoldType dwGold, int iItemCount, TPlayerItem * pItems);
 		void				ChangeSafeboxSize(BYTE bSize);
 		void				CloseSafebox();
 

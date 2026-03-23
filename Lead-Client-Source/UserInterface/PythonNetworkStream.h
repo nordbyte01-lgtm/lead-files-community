@@ -146,8 +146,8 @@ class CPythonNetworkStream : public CNetworkStream, public CSingleton<CPythonNet
 
 		bool SendItemUsePacket(TItemPos pos);
 		bool SendItemUseToItemPacket(TItemPos source_pos, TItemPos target_pos);
-		bool SendItemDropPacket(TItemPos pos, DWORD elk);
-		bool SendItemDropPacket(TItemPos pos, DWORD elk, DWORD count);
+		bool SendItemDropPacket(TItemPos pos, GoldType elk);
+		bool SendItemDropPacket(TItemPos pos, GoldType elk, DWORD count);
 		bool SendItemMovePacket(TItemPos pos, TItemPos change_pos, ItemStackType count);
 		bool SendItemPickUpPacket(DWORD vid);
 
@@ -166,7 +166,7 @@ class CPythonNetworkStream : public CNetworkStream, public CSingleton<CPythonNet
 		// Exchange
 		bool SendExchangeStartPacket(DWORD vid);
 		bool SendExchangeItemAddPacket(TItemPos ItemPos, BYTE byDisplayPos);
-		bool SendExchangeElkAddPacket(DWORD elk);
+		bool SendExchangeElkAddPacket(GoldType elk);
 		bool SendExchangeItemDelPacket(BYTE pos);
 		bool SendExchangeAcceptPacket();
 		bool SendExchangeExitPacket();
@@ -202,7 +202,7 @@ class CPythonNetworkStream : public CNetworkStream, public CSingleton<CPythonNet
 		bool SendPartyParameterPacket(BYTE byDistributeMode);
 
 		// SafeBox
-		bool SendSafeBoxMoneyPacket(BYTE byState, DWORD dwMoney);
+		bool SendSafeBoxMoneyPacket(BYTE byState, GoldType dwMoney);
 		bool SendSafeBoxCheckinPacket(TItemPos InventoryPos, BYTE bySafeBoxPos);
 		bool SendSafeBoxCheckoutPacket(BYTE bySafeBoxPos, TItemPos InventoryPos);
 		bool SendSafeBoxItemMovePacket(BYTE bySourcePos, BYTE byTargetPos, ItemStackType byCount);
@@ -225,8 +225,8 @@ class CPythonNetworkStream : public CNetworkStream, public CSingleton<CPythonNet
 		bool SendGuildInvitePacket(DWORD dwVID);
 		bool SendGuildInviteAnswerPacket(DWORD dwGuildID, BYTE byAnswer);
 		bool SendGuildChargeGSPPacket(DWORD dwMoney);
-		bool SendGuildDepositMoneyPacket(DWORD dwMoney);
-		bool SendGuildWithdrawMoneyPacket(DWORD dwMoney);
+		bool SendGuildDepositMoneyPacket(GoldType dwMoney);
+		bool SendGuildWithdrawMoneyPacket(GoldType dwMoney);
 
 		// Mall
 		bool RecvMallOpenPacket();

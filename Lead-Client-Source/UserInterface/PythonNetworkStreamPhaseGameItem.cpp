@@ -11,7 +11,7 @@
 //////////////////////////////////////////////////////////////////////////
 // SafeBox
 
-bool CPythonNetworkStream::SendSafeBoxMoneyPacket(BYTE byState, DWORD dwMoney)
+bool CPythonNetworkStream::SendSafeBoxMoneyPacket(BYTE byState, GoldType dwMoney)
 {
 	assert(!"CPythonNetworkStream::SendSafeBoxMoneyPacket - Deprecated function function function");
 	return false;
@@ -509,7 +509,7 @@ bool CPythonNetworkStream::SendItemUseToItemPacket(TItemPos source_pos, TItemPos
 	return SendSequence();
 }
 
-bool CPythonNetworkStream::SendItemDropPacket(TItemPos pos, DWORD elk, DWORD count)
+bool CPythonNetworkStream::SendItemDropPacket(TItemPos pos, GoldType elk, DWORD count)
 {
 	if (!__CanActMainInstance())
 		return true;

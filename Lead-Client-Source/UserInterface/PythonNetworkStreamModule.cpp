@@ -701,12 +701,12 @@ PyObject* netSendItemDropPacket(PyObject* poSelf, PyObject* poArgs)
 
 PyObject* netSendGoldDropPacket(PyObject* poSelf, PyObject* poArgs)
 {
-	int iElk;
-	if (!PyTuple_GetInteger(poArgs, 0, &iElk))
+	GoldType iElk;
+	if (!PyTuple_GetLongLong(poArgs, 0, &iElk))
 		return Py_BuildException();
 
 	CPythonNetworkStream& rkNetStream=CPythonNetworkStream::Instance();
-	rkNetStream.SendItemDropPacket(TItemPos (RESERVED_WINDOW, 0), (DWORD) iElk, 0);
+	rkNetStream.SendItemDropPacket(TItemPos (RESERVED_WINDOW, 0), iElk, 0);
 	return Py_BuildNone();
 }
 
@@ -838,8 +838,8 @@ PyObject* netSendExchangeStartPacket(PyObject* poSelf, PyObject* poArgs)
 
 PyObject* netSendExchangeElkAddPacket(PyObject* poSelf, PyObject* poArgs)
 {
-	int iElk;
-	if (!PyTuple_GetInteger(poArgs, 0, &iElk))
+	GoldType iElk;
+	if (!PyTuple_GetLongLong(poArgs, 0, &iElk))
 		return Py_BuildException();
 
 	CPythonNetworkStream& rkNetStream=CPythonNetworkStream::Instance();
@@ -1082,8 +1082,8 @@ PyObject* netSendPartyParameterPacket(PyObject* poSelf, PyObject* poArgs)
 
 PyObject* netSendSafeboxSaveMoneyPacket(PyObject* poSelf, PyObject* poArgs)
 {
-	int iMoney;
-	if (!PyTuple_GetInteger(poArgs, 0, &iMoney))
+	GoldType iMoney;
+	if (!PyTuple_GetLongLong(poArgs, 0, &iMoney))
 		return Py_BuildException();
 
 	CPythonNetworkStream& rns=CPythonNetworkStream::Instance();
@@ -1094,8 +1094,8 @@ PyObject* netSendSafeboxSaveMoneyPacket(PyObject* poSelf, PyObject* poArgs)
 
 PyObject* netSendSafeboxWithdrawMoneyPacket(PyObject* poSelf, PyObject* poArgs)
 {
-	int iMoney;
-	if (!PyTuple_GetInteger(poArgs, 0, &iMoney))
+	GoldType iMoney;
+	if (!PyTuple_GetLongLong(poArgs, 0, &iMoney))
 		return Py_BuildException();
 
 	CPythonNetworkStream& rns=CPythonNetworkStream::Instance();
@@ -1436,8 +1436,8 @@ PyObject* netSendGuildChargeGSPPacket(PyObject* poSelf, PyObject* poArgs)
 
 PyObject* netSendGuildDepositMoneyPacket(PyObject* poSelf, PyObject* poArgs)
 {
-	int iGSP;
-	if (!PyTuple_GetInteger(poArgs, 0, &iGSP))
+	GoldType iGSP;
+	if (!PyTuple_GetLongLong(poArgs, 0, &iGSP))
 		return Py_BuildException();
 
 	CPythonNetworkStream& rns=CPythonNetworkStream::Instance();
@@ -1448,8 +1448,8 @@ PyObject* netSendGuildDepositMoneyPacket(PyObject* poSelf, PyObject* poArgs)
 
 PyObject* netSendGuildWithdrawMoneyPacket(PyObject* poSelf, PyObject* poArgs)
 {
-	int iGSP;
-	if (!PyTuple_GetInteger(poArgs, 0, &iGSP))
+	GoldType iGSP;
+	if (!PyTuple_GetLongLong(poArgs, 0, &iGSP))
 		return Py_BuildException();
 
 	CPythonNetworkStream& rns=CPythonNetworkStream::Instance();

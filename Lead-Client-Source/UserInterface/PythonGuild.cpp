@@ -10,7 +10,7 @@ void CPythonGuild::EnableGuild()
 	m_bGuildEnable = TRUE;
 }
 
-void CPythonGuild::SetGuildMoney(DWORD dwMoney)
+void CPythonGuild::SetGuildMoney(GoldType dwMoney)
 {
 	m_GuildInfo.dwGuildMoney = dwMoney;
 }
@@ -435,7 +435,7 @@ PyObject * guildGetEnemyGuildName(PyObject * poSelf, PyObject * poArgs)
 PyObject * guildGetGuildMoney(PyObject * poSelf, PyObject * poArgs)
 {
 	CPythonGuild::TGuildInfo & rGuildInfo = CPythonGuild::Instance().GetGuildInfoRef();
-	return Py_BuildValue("i", rGuildInfo.dwGuildMoney);
+	return PyLong_FromLongLong(rGuildInfo.dwGuildMoney);
 }
 
 PyObject * guildGetGuildBoardCommentCount(PyObject * poSelf, PyObject * poArgs)

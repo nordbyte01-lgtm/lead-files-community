@@ -116,11 +116,13 @@ class CPythonPlayer : public CSingleton<CPythonPlayer>, public IAbstractPlayer
 			TItemData			aSwitchbotItem[SWITCHBOT_SLOT_COUNT];
 			TQuickslot			aQuickSlot[QUICKSLOT_MAX_NUM];
 			TSkillInstance		aSkill[SKILL_MAX_NUM];
-			long				m_alPoint[POINT_MAX_NUM];
+			GoldType			m_alPoint[POINT_MAX_NUM];
 			long				lQuickPageIndex;
 
-			void SetPoint(UINT ePoint, long lPoint);
-			long GetPoint(UINT ePoint);
+			void SetPoint(UINT ePoint, GoldType lPoint);
+			GoldType GetPoint(UINT ePoint);
+			void SetGold(GoldType gold);
+			GoldType GetGold();
 		} TPlayerStatus;
 
 		typedef struct SPartyMemberInfo
@@ -267,8 +269,10 @@ class CPythonPlayer : public CSingleton<CPythonPlayer>, public IAbstractPlayer
 		DWORD	GetRace();
 
 		void	SetWeaponPower(DWORD dwMinPower, DWORD dwMaxPower, DWORD dwMinMagicPower, DWORD dwMaxMagicPower, DWORD dwAddPower);
-		void	SetStatus(DWORD dwType, long lValue);
+		void	SetStatus(DWORD dwType, GoldType lValue);
 		int		GetStatus(DWORD dwType);
+		void	SetGold(GoldType value);
+		GoldType	GetGold();
 
 
 		// Item

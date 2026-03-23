@@ -1361,7 +1361,7 @@ bool CPythonNetworkStream::RecvPointChange()
 		{
 			if (PointChange.amount > 0)
 			{
-				PyCallClassMemberFunc(m_apoPhaseWnd[PHASE_WINDOW_GAME], "OnPickMoney", Py_BuildValue("(i)", PointChange.amount));
+				PyCallClassMemberFunc(m_apoPhaseWnd[PHASE_WINDOW_GAME], "OnPickMoney", Py_BuildValue("(L)", PointChange.amount));
 			}
 		}
 		else if (POINT_LEVEL == PointChange.type)
@@ -1904,7 +1904,7 @@ bool CPythonNetworkStream::SendExchangeStartPacket(DWORD vid)
 	return SendSequence();
 }
 
-bool CPythonNetworkStream::SendExchangeElkAddPacket(DWORD elk)
+bool CPythonNetworkStream::SendExchangeElkAddPacket(GoldType elk)
 {
 	if (!__CanActMainInstance())
 		return true;
@@ -3036,7 +3036,7 @@ bool CPythonNetworkStream::SendGuildChargeGSPPacket(DWORD dwMoney)
 	return SendSequence();
 }
 
-bool CPythonNetworkStream::SendGuildDepositMoneyPacket(DWORD dwMoney)
+bool CPythonNetworkStream::SendGuildDepositMoneyPacket(GoldType dwMoney)
 {
 	TPacketCGGuild GuildPacket;
 	GuildPacket.header = HEADER_CG_GUILD;
@@ -3046,11 +3046,11 @@ bool CPythonNetworkStream::SendGuildDepositMoneyPacket(DWORD dwMoney)
 	if (!Send(sizeof(dwMoney), &dwMoney))
 		return false;
 
-	Tracef(" SendGuildDepositMoneyPacket %d\n", dwMoney);
+	Tracef(" SendGuildDepositMoneyPacket %lld\n", static_cast<long long>(dwMoney));
 	return SendSequence();
 }
 
-bool CPythonNetworkStream::SendGuildWithdrawMoneyPacket(DWORD dwMoney)
+bool CPythonNetworkStream::SendGuildWithdrawMoneyPacket(GoldType dwMoney)
 {
 	TPacketCGGuild GuildPacket;
 	GuildPacket.header = HEADER_CG_GUILD;
@@ -3060,7 +3060,7 @@ bool CPythonNetworkStream::SendGuildWithdrawMoneyPacket(DWORD dwMoney)
 	if (!Send(sizeof(dwMoney), &dwMoney))
 		return false;
 
-	Tracef(" SendGuildWithdrawMoneyPacket %d\n", dwMoney);
+	Tracef(" SendGuildWithdrawMoneyPacket %lld\n", static_cast<long long>(dwMoney));
 	return SendSequence();
 }
 
@@ -3496,14 +3496,14 @@ bool CPythonNetworkStream::RecvGuild()
 		}
 		case GUILD_SUBHEADER_GC_MONEY_CHANGE:
 		{
-			DWORD dwMoney;
+			GoldType dwMoney;
 			if (!Recv(sizeof(dwMoney), &dwMoney))
 				return false;
 
 			CPythonGuild::Instance().SetGuildMoney(dwMoney);
 
 			__RefreshGuildWindowInfoPage();
-			Tracef(" >> Guild Money Change : %d\n", dwMoney);
+			Tracef(" >> Guild Money Change : %lld\n", static_cast<long long>(dwMoney));
 			break;
 		}
 	}

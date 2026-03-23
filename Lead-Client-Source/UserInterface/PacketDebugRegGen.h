@@ -421,7 +421,7 @@ inline void Print_TPacketGCCharacterPoints(FILE* f, const void* data, int size) 
 
 inline void Print_TPacketGCCharacterPointChange(FILE* f, const void* data, int size) {
     const TPacketGCCharacterPointChange& p = *(const TPacketGCCharacterPointChange*)data;
-    fprintf(f, "dwVID=%u type=%u amount=%ld value=%ld\n", p.dwVID, p.type, p.amount, p.value);
+    fprintf(f, "dwVID=%u type=%u amount=%lld value=%lld\n", p.dwVID, p.type, (long long)p.amount, (long long)p.value);
 }
 
 inline void Print_TPacketGCChangeSpeed(FILE* f, const void* data, int size) {

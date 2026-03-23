@@ -301,7 +301,7 @@ void CShopManager::Sell(LPCHARACTER ch, BYTE bCell, ItemStackType bCount)
 	if (IS_SET(item->GetAntiFlag(), ITEM_ANTIFLAG_SELL))
 		return;
 
-	DWORD dwPrice;
+	GoldType dwPrice;
 
 	if (bCount == 0 || bCount > item->GetCount())
 		bCount = item->GetCount();
@@ -330,17 +330,17 @@ void CShopManager::Sell(LPCHARACTER ch, BYTE bCell, ItemStackType bCount)
 	if (test_server)
 		sys_log(0, "Sell Item price id %d %s itemid %d", ch->GetPlayerID(), ch->GetName(), item->GetID());
 
-	const int64_t nTotalMoney = static_cast<int64_t>(ch->GetGold()) + static_cast<int64_t>(dwPrice);
+	const GoldType nTotalMoney = ch->GetGold() + dwPrice;
 
 	if (GOLD_MAX <= nTotalMoney)
 	{
-		sys_err("[OVERFLOW_GOLD] id %u name %s gold %u", ch->GetPlayerID(), ch->GetName(), ch->GetGold());
+		sys_err("[OVERFLOW_GOLD] id %u name %s gold %lld", ch->GetPlayerID(), ch->GetName(), static_cast<long long>(ch->GetGold()));
 		ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("You cannot trade because you are carrying more than 2 billion Yang."));
 		return;
 	}
 
 	// 20050802.myevan. Items in store sales log ID addition
-	sys_log(0, "SHOP: SELL: %s item name: %s(x%d):%u price: %u", ch->GetName(), item->GetName(), bCount, item->GetID(), dwPrice);
+	sys_log(0, "SHOP: SELL: %s item name: %s(x%d):%u price: %lld", ch->GetName(), item->GetName(), bCount, item->GetID(), static_cast<long long>(dwPrice));
 
 	if (iVal > 0)
 		ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("This sale will be taxed %d%%."), iVal);

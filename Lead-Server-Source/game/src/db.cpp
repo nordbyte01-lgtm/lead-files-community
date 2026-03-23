@@ -509,7 +509,7 @@ const std::string& DBManager::GetDBString(const std::string& key)
 	return it->second;
 }
 
-void DBManager::SendMoneyLog(BYTE type, DWORD vnum, int gold)
+void DBManager::SendMoneyLog(BYTE type, DWORD vnum, GoldType gold)
 {
 	if (!gold)
 		return;

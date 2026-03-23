@@ -630,7 +630,7 @@ typedef struct command_item_drop
 {
 	BYTE 	header;
 	TItemPos 	Cell;
-	DWORD	gold;
+	GoldType gold;
 	ItemStackType	count;
 } TPacketCGItemDrop;
 
@@ -701,7 +701,7 @@ typedef struct command_exchange
 {
 	BYTE	header;
 	BYTE	sub_header;
-	DWORD	arg1;
+	GoldType arg1;
 	BYTE	arg2;
 	TItemPos	Pos;
 } TPacketCGExchange;
@@ -995,7 +995,7 @@ typedef struct packet_main_character4_bgm_vol
 typedef struct packet_points
 {
 	BYTE	header;
-	INT		points[POINT_MAX_NUM];
+	GoldType points[POINT_MAX_NUM];
 } TPacketGCCharacterPoints;
 
 typedef struct packet_skill_level
@@ -1009,8 +1009,8 @@ typedef struct packet_point_change
 	int		header;
 	DWORD	dwVID;
 	BYTE	type;
-	long	amount;
-	long	value;
+	GoldType amount;
+	GoldType value;
 } TPacketGCCharacterPointChange;
 
 typedef struct packet_stun
@@ -1147,7 +1147,7 @@ enum EPacketShopSubHeaders
 typedef struct packet_shop_item
 {   
 	DWORD       vnum;
-	DWORD       price;
+	GoldType price;
 	ItemStackType        count;
 	BYTE		display_pos;
 	long	alSockets[ITEM_SOCKET_MAX_NUM];
@@ -1180,7 +1180,7 @@ typedef struct packet_shop_update_item
 
 typedef struct packet_shop_update_price
 {
-	int				iPrice;
+	GoldType iPrice;
 } TPacketGCShopUpdatePrice;
 
 typedef struct packet_shop	// 가변 패킷
@@ -1194,8 +1194,8 @@ typedef struct packet_exchange
 {
 	BYTE	header;
 	BYTE	sub_header;
-	BYTE	is_me;
-	DWORD	arg1;	// vnum
+	BYTE is_me;
+	GoldType arg1;	// vnum
 	TItemPos	arg2;	// cell
 	DWORD	arg3;	// count
 	long	alSockets[ITEM_SOCKET_MAX_NUM];
@@ -1621,7 +1621,7 @@ typedef struct command_safebox_money
 {
 	BYTE        bHeader;
 	BYTE        bState;
-	long	lMoney;
+	GoldType	lMoney;
 } TPacketCGSafeboxMoney;
 
 // Guild
@@ -1706,7 +1706,7 @@ typedef struct packet_guild_sub_info
 	DWORD exp;
 	BYTE level;
 	char name[GUILD_NAME_MAX_LEN+1];
-	DWORD gold;
+	GoldType gold;
 	BYTE has_land;
 } TPacketGCGuildInfo;
 

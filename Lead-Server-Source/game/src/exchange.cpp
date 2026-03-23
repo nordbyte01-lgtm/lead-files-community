@@ -14,10 +14,10 @@
 #include "exchange.h"
 #include "DragonSoul.h"
 
-void exchange_packet(LPCHARACTER ch, BYTE sub_header, bool is_me, DWORD arg1, TItemPos arg2, DWORD arg3, void * pvData = NULL);
+void exchange_packet(LPCHARACTER ch, BYTE sub_header, bool is_me, GoldType arg1, TItemPos arg2, DWORD arg3, void * pvData = NULL);
 
 // exchange packet
-void exchange_packet(LPCHARACTER ch, BYTE sub_header, bool is_me, DWORD arg1, TItemPos arg2, DWORD arg3, void * pvData)
+void exchange_packet(LPCHARACTER ch, BYTE sub_header, bool is_me, GoldType arg1, TItemPos arg2, DWORD arg3, void * pvData)
 {
 	if (!ch->GetDesc())
 		return;
@@ -241,7 +241,7 @@ bool CExchange::RemoveItem(BYTE pos)
 	return true;
 }
 
-bool CExchange::AddGold(long gold)
+bool CExchange::AddGold(GoldType gold)
 {
 	if (gold <= 0)
 		return false;
@@ -582,4 +582,3 @@ void CExchange::Cancel()
 
 	M2_DELETE(this);
 }
-

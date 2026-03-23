@@ -2816,7 +2816,7 @@ int CHARACTER::GetPolymorphPoint(BYTE type) const
 	return GetPoint(type);
 }
 
-int CHARACTER::GetPoint(BYTE type) const
+GoldType CHARACTER::GetPoint(BYTE type) const
 {
 	if (type >= POINT_MAX_NUM)
 	{
@@ -2824,8 +2824,8 @@ int CHARACTER::GetPoint(BYTE type) const
 		return 0;
 	}
 
-	int val = m_pointsInstant.points[type];
-	int max_val = INT_MAX;
+	GoldType val = m_pointsInstant.points[type];
+	GoldType max_val = LLONG_MAX;
 
 	switch (type)
 	{
@@ -2849,10 +2849,10 @@ int CHARACTER::GetLimitPoint(BYTE type) const
 		return 0;
 	}
 
-	int val = m_pointsInstant.points[type];
-	int max_val = INT_MAX;
-	int limit = INT_MAX;
-	int min_limit = -INT_MAX;
+	GoldType val = m_pointsInstant.points[type];
+	GoldType max_val = LLONG_MAX;
+	GoldType limit = LLONG_MAX;
+	GoldType min_limit = -LLONG_MAX;
 
 	switch (type)
 	{
@@ -2888,7 +2888,7 @@ int CHARACTER::GetLimitPoint(BYTE type) const
 	}
 
 	if (val > max_val)
-		sys_err("POINT_ERROR: %s type %d val %d (max: %d)", GetName(), val, max_val);
+		sys_err("POINT_ERROR: %s type %d val %lld (max: %lld)", GetName(), type, static_cast<long long>(val), static_cast<long long>(max_val));
 
 	if (val > limit)
 		val = limit;
@@ -2899,7 +2899,7 @@ int CHARACTER::GetLimitPoint(BYTE type) const
 	return (val);
 }
 
-void CHARACTER::SetPoint(BYTE type, int val)
+void CHARACTER::SetPoint(BYTE type, GoldType val)
 {
 	if (type >= POINT_MAX_NUM)
 	{
@@ -2916,14 +2916,9 @@ void CHARACTER::SetPoint(BYTE type, int val)
 	}
 }
 
-INT CHARACTER::GetAllowedGold() const
+GoldType CHARACTER::GetAllowedGold() const
 {
-	if (GetLevel() <= 10)
-		return 100000;
-	else if (GetLevel() <= 20)
-		return 500000;
-	else
-		return 50000000;
+	return GOLD_MAX;
 }
 
 void CHARACTER::CheckMaximumPoints()
@@ -2935,9 +2930,9 @@ void CHARACTER::CheckMaximumPoints()
 		PointChange(POINT_SP, GetMaxSP() - GetSP());
 }
 
-void CHARACTER::PointChange(BYTE type, int amount, bool bAmount, bool bBroadcast)
+void CHARACTER::PointChange(BYTE type, GoldType amount, bool bAmount, bool bBroadcast)
 {
-	int val = 0;
+	GoldType val = 0;
 
 	//sys_log(0, "PointChange %d %d | %d -> %d cHP %d mHP %d", type, amount, GetPoint(type), GetPoint(type)+amount, GetHP(), GetMaxHP());
 
@@ -3235,7 +3230,7 @@ void CHARACTER::PointChange(BYTE type, int amount, bool bAmount, bool bBroadcast
 
 				if (GOLD_MAX <= nTotalMoney)
 				{
-					sys_err("[OVERFLOW_GOLD] OriGold %d AddedGold %d id %u Name %s ", GetGold(), amount, GetPlayerID(), GetName());
+					sys_err("[OVERFLOW_GOLD] OriGold %lld AddedGold %d id %u Name %s ", static_cast<long long>(GetGold()), amount, GetPlayerID(), GetName());
 					LogManager::instance().CharLog(this, GetGold() + amount, "OVERFLOW_GOLD", "");
 					return;
 				}
@@ -5423,7 +5418,7 @@ void CHARACTER::ReqSafeboxLoad(const char* pszPassword)
 	db_clientdesc->DBPacket(HEADER_GD_SAFEBOX_LOAD, GetDesc()->GetHandle(), &p, sizeof(p));
 }
 
-void CHARACTER::LoadSafebox(int iSize, DWORD dwGold, int iItemCount, TPlayerItem * pItems)
+void CHARACTER::LoadSafebox(int iSize, GoldType dwGold, int iItemCount, TPlayerItem * pItems)
 {
 	bool bLoaded = false;
 

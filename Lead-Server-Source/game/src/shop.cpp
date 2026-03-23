@@ -181,7 +181,7 @@ void CShop::SetShopItems(TShopItemTable * pTable, BYTE bItemCount)
 		char name[36];
 		snprintf(name, sizeof(name), "%-20s(#%-5d) (x %d)", item_table->szName, (int) item.vnum, item.count);
 
-		sys_log(0, "SHOP_ITEM: %-36s PRICE %-5d", name, item.price);
+		sys_log(0, "SHOP_ITEM: %-36s PRICE %-5lld", name, static_cast<long long>(item.price));
 		++pTable;
 	}
 }
@@ -232,14 +232,14 @@ int CShop::Buy(LPCHARACTER ch, BYTE pos)
 		}
 	}
 
-	DWORD dwPrice = r_item.price;
+	GoldType dwPrice = r_item.price;
 
 	if (it->second)	// if other empire, price is triple
 		dwPrice *= 3;
 
 	if (ch->GetGold() < (int) dwPrice)
 	{
-		sys_log(1, "Shop::Buy : Not enough money : %s has %d, price %d", ch->GetName(), ch->GetGold(), dwPrice);
+		sys_log(1, "Shop::Buy : Not enough money : %s has %lld, price %lld", ch->GetName(), static_cast<long long>(ch->GetGold()), static_cast<long long>(dwPrice));
 		return SHOP_SUBHEADER_GC_NOT_ENOUGH_MONEY;
 	}
 
@@ -364,7 +364,7 @@ int CShop::Buy(LPCHARACTER ch, BYTE pos)
 	}
 
 	if (item)
-		sys_log(0, "SHOP: BUY: name %s %s(x %d):%u price %u", ch->GetName(), item->GetName(), item->GetCount(), item->GetID(), dwPrice);
+		sys_log(0, "SHOP: BUY: name %s %s(x %d):%u price %lld", ch->GetName(), item->GetName(), item->GetCount(), item->GetID(), static_cast<long long>(dwPrice));
 
     ch->Save();
 
@@ -567,4 +567,3 @@ void CShop::RemoveAllGuests()
 	}
 	m_map_guest.clear();
 }
-

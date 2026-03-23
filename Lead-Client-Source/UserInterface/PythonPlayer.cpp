@@ -21,14 +21,24 @@ enum
 
 const DWORD POINT_MAGIC_NUMBER = 0xe73ac1da;
 
-void CPythonPlayer::SPlayerStatus::SetPoint(UINT ePoint, long lPoint)
+void CPythonPlayer::SPlayerStatus::SetPoint(UINT ePoint, GoldType lPoint)
 {
 	m_alPoint[ePoint]=lPoint ^ POINT_MAGIC_NUMBER;
 }
 
-long CPythonPlayer::SPlayerStatus::GetPoint(UINT ePoint)
+GoldType CPythonPlayer::SPlayerStatus::GetPoint(UINT ePoint)
 {
 	return m_alPoint[ePoint] ^ POINT_MAGIC_NUMBER;
+}
+
+void CPythonPlayer::SPlayerStatus::SetGold(GoldType gold)
+{
+	SetPoint(POINT_GOLD, gold);
+}
+
+GoldType CPythonPlayer::SPlayerStatus::GetGold()
+{
+	return GetPoint(POINT_GOLD);
 }
 
 bool CPythonPlayer::AffectIndexToSkillIndex(DWORD dwAffectIndex, DWORD * pdwSkillIndex)
@@ -423,7 +433,7 @@ void CPythonPlayer::__UpdateBattleStatus()
 	m_playerStatus.SetPoint(POINT_WEAPON_MAX, __GetTotalAtk(m_dwWeaponMaxPower, m_dwWeaponAddPower));
 }
 
-void CPythonPlayer::SetStatus(DWORD dwType, long lValue)
+void CPythonPlayer::SetStatus(DWORD dwType, GoldType lValue)
 {
 	if (dwType >= POINT_MAX_NUM)
 	{
@@ -470,7 +480,17 @@ int CPythonPlayer::GetStatus(DWORD dwType)
 		return 0;
 	}
 
-	return m_playerStatus.GetPoint(dwType);
+	return static_cast<int>(m_playerStatus.GetPoint(dwType));
+}
+
+void CPythonPlayer::SetGold(GoldType value)
+{
+	m_playerStatus.SetGold(value);
+}
+
+GoldType CPythonPlayer::GetGold()
+{
+	return m_playerStatus.GetGold();
 }
 
 const char* CPythonPlayer::GetName()

@@ -237,6 +237,7 @@ class PrivateShopBuilder(ui.ScriptWindow):
 				return
 
 			priceInputBoard = uiCommon.MoneyInputDialog()
+			priceInputBoard.SetMaxLength(20)
 			priceInputBoard.SetTitle(localeInfo.PRIVATE_SHOP_INPUT_PRICE_DIALOG_TITLE)
 			priceInputBoard.SetAcceptEvent(ui.__mem_func__(self.AcceptInputPrice))
 			priceInputBoard.SetCancelEvent(ui.__mem_func__(self.CancelInputPrice))

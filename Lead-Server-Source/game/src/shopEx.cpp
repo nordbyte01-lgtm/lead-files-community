@@ -138,7 +138,7 @@ int CShopEx::Buy(LPCHARACTER ch, BYTE pos)
 		return SHOP_SUBHEADER_GC_NOT_ENOUGH_MONEY;
 	}
 
-	DWORD dwPrice = r_item.price;
+	GoldType dwPrice = r_item.price;
 
 	switch (shopTab.coinType)
 	{
@@ -148,7 +148,7 @@ int CShopEx::Buy(LPCHARACTER ch, BYTE pos)
 
 		if (ch->GetGold() < (int) dwPrice)
 		{
-			sys_log(1, "ShopEx::Buy : Not enough money : %s has %d, price %d", ch->GetName(), ch->GetGold(), dwPrice);
+			sys_log(1, "ShopEx::Buy : Not enough money : %s has %lld, price %lld", ch->GetName(), static_cast<long long>(ch->GetGold()), static_cast<long long>(dwPrice));
 			return SHOP_SUBHEADER_GC_NOT_ENOUGH_MONEY;
 		}
 		break;
@@ -215,11 +215,10 @@ int CShopEx::Buy(LPCHARACTER ch, BYTE pos)
 	DBManager::instance().SendMoneyLog(MONEY_LOG_SHOP, item->GetVnum(), -dwPrice);
 
 	if (item)
-		sys_log(0, "ShopEx: BUY: name %s %s(x %d):%u price %u", ch->GetName(), item->GetName(), item->GetCount(), item->GetID(), dwPrice);
+		sys_log(0, "ShopEx: BUY: name %s %s(x %d):%u price %lld", ch->GetName(), item->GetName(), item->GetCount(), item->GetID(), static_cast<long long>(dwPrice));
 
 
 	ch->Save();
 
     return (SHOP_SUBHEADER_GC_OK);
 }
-

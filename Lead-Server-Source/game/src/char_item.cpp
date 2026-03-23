@@ -1608,10 +1608,10 @@ void CHARACTER::__OpenPrivateShop()
 }
 
 // MYSHOP_PRICE_LIST
-void CHARACTER::SendMyShopPriceListCmd(DWORD dwItemVnum, DWORD dwItemPrice)
+void CHARACTER::SendMyShopPriceListCmd(DWORD dwItemVnum, GoldType dwItemPrice)
 {
 	char szLine[256];
-	snprintf(szLine, sizeof(szLine), "MyShopPriceList %u %u", dwItemVnum, dwItemPrice);
+	snprintf(szLine, sizeof(szLine), "MyShopPriceList %u %lld", dwItemVnum, static_cast<long long>(dwItemPrice));
 	ChatPacket(CHAT_TYPE_COMMAND, szLine);
 	sys_log(0, szLine);
 }
@@ -5302,7 +5302,7 @@ bool CHARACTER::DropItem(TItemPos Cell, ItemStackType bCount)
 	return true;
 }
 
-bool CHARACTER::DropGold(int gold)
+bool CHARACTER::DropGold(GoldType gold)
 {
 	if (gold <= 0 || gold > GetGold())
 		return false;
@@ -5573,27 +5573,27 @@ namespace NPartyPickupDistribute
 	};
 }
 
-void CHARACTER::GiveGold(int iAmount)
+void CHARACTER::GiveGold(GoldType iAmount)
 {
 	if (iAmount <= 0)
 		return;
 
-	sys_log(0, "GIVE_GOLD: %s %d", GetName(), iAmount);
+	sys_log(0, "GIVE_GOLD: %s %lld", GetName(), static_cast<long long>(iAmount));
 
 	if (GetParty())
 	{
 		LPPARTY pParty = GetParty();
 
 		// If you have a party, share. .
-		DWORD dwTotal = iAmount;
-		DWORD dwMyAmount = dwTotal;
+		GoldType dwTotal = iAmount;
+		GoldType dwMyAmount = dwTotal;
 
 		NPartyPickupDistribute::FCountNearMember funcCountNearMember(this);
 		pParty->ForEachOnlineMember(funcCountNearMember);
 
 		if (funcCountNearMember.total > 1)
 		{
-			DWORD dwShare = dwTotal / funcCountNearMember.total;
+			GoldType dwShare = dwTotal / funcCountNearMember.total;
 			dwMyAmount -= dwShare * (funcCountNearMember.total - 1);
 
 			NPartyPickupDistribute::FMoneyDistributor funcMoneyDist(this, dwShare);

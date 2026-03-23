@@ -337,7 +337,7 @@ class MoneyInputDialog(ui.ScriptWindow):
 
 		self.moneyHeaderText = localeInfo.MONEY_INPUT_DIALOG_SELLPRICE
 		self.__CreateDialog()
-		self.SetMaxLength(9)
+		self.SetMaxLength(20)
 
 	def __del__(self):
 		ui.ScriptWindow.__del__(self)
@@ -379,7 +379,7 @@ class MoneyInputDialog(ui.ScriptWindow):
 		self.inputValue.SetFocus()
 
 	def SetMaxLength(self, length):
-		length = min(9, length)
+		length = min(20, length)
 		self.inputValue.SetMax(length)
 
 	def SetMoneyHeaderText(self, text):
@@ -412,7 +412,7 @@ class MoneyInputDialog(ui.ScriptWindow):
 		money = 0
 		if text and text.isdigit():
 			try:
-				money = int(text)
+				money = long(text)
 			except ValueError:
 				money = 199999999
 

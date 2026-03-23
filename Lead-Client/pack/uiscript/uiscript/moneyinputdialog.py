@@ -51,7 +51,7 @@ window = {
 							"width" : 90,
 							"height" : 18,
 
-							"input_limit" : 12,
+							"input_limit" : 20,
 						},
 					),
 				},

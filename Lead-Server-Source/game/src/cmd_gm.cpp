@@ -1416,12 +1416,12 @@ ACMD(do_set)
 	{
 		case 0:	// gold
 			{
-				int gold = 0;
+				GoldType gold = 0;
 				str_to_number(gold, arg3);
 				DBManager::instance().SendMoneyLog(MONEY_LOG_MISC, 3, gold);
-				int before_gold = tch->GetGold();
+				GoldType before_gold = tch->GetGold();
 				tch->PointChange(POINT_GOLD, gold, true);
-				int after_gold = tch->GetGold();
+				GoldType after_gold = tch->GetGold();
 				if (0 == after_gold && 0 != before_gold)
 				{
 					LogManager::instance().CharLog(tch, gold, "ZERO_GOLD", "GM");
@@ -1479,9 +1479,18 @@ ACMD(do_set)
 
 	if (set_fields[i].type == NUMBER)
 	{
-		int	amount = 0;
-		str_to_number(amount, arg3);
-		ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("%s's %s set to [%d]"), tch->GetName(), set_fields[i].cmd, amount);
+		if (i == 0) // gold
+		{
+			GoldType amount = 0;
+			str_to_number(amount, arg3);
+			ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("%s's %s set to [%lld]"), tch->GetName(), set_fields[i].cmd, static_cast<long long>(amount));
+		}
+		else
+		{
+			int amount = 0;
+			str_to_number(amount, arg3);
+			ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("%s's %s set to [%d]"), tch->GetName(), set_fields[i].cmd, amount);
+		}
 	}
 }
 
@@ -4244,4 +4253,3 @@ ACMD(do_free_regen)
 	regen_free_map(ch->GetMapIndex());
 	ch->ChatPacket(CHAT_TYPE_INFO, "the regens now FREEEE! :)");
 }
-

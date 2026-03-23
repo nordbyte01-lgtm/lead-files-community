@@ -333,7 +333,7 @@ namespace quest
 			return 0;
 		}
 
-		int iAmount = (int) lua_tonumber(L, 1);
+		GoldType iAmount = static_cast<GoldType>(lua_tonumber(L, 1));
 
 		if (iAmount <= 0)
 		{
@@ -962,12 +962,12 @@ namespace quest
 
 	int pc_change_money(lua_State * L)
 	{
-		int gold = (int)lua_tonumber(L, -1);
+		GoldType gold = static_cast<GoldType>(lua_tonumber(L, -1));
 
 		LPCHARACTER ch = CQuestManager::instance().GetCurrentCharacterPtr();
 
 		if (gold + ch->GetGold() < 0)
-			sys_err("QUEST wrong ChangeGold %d (now %d)", gold, ch->GetGold());
+			sys_err("QUEST wrong ChangeGold %lld (now %lld)", static_cast<long long>(gold), static_cast<long long>(ch->GetGold()));
 		else
 		{
 			DBManager::instance().SendMoneyLog(MONEY_LOG_QUEST, ch->GetPlayerID(), gold);

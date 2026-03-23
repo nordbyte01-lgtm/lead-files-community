@@ -8,7 +8,7 @@ class CGrid;
 class CSafebox
 {
 	public:
-		CSafebox(LPCHARACTER pkChrOwner, int iSize, DWORD dwGold);
+		CSafebox(LPCHARACTER pkChrOwner, int iSize, GoldType dwGold);
 		~CSafebox();
 
 		bool		Add(DWORD dwPos, LPITEM pkItem);
@@ -33,7 +33,7 @@ class CSafebox
 		LPITEM		m_pkItems[SAFEBOX_MAX_NUM];
 		CGrid *		m_pkGrid;
 		int		m_iSize;
-		long		m_lGold;
+		GoldType	m_lGold;
 
 		BYTE		m_bWindowMode;
 };
